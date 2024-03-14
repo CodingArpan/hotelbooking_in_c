@@ -30,16 +30,16 @@ struct room
     int booked;
 };
 
-void displayAvailableRooms(struct room availableRooms[])
+void displayavailablerooms(struct room rooms[])
 {
     int i;
     printf("Available Rooms\n");
     for (i = 0; i < 10; i++)
     {
-        if (availableRooms[i].booked == 0)
+        if (rooms[i].booked == 0)
         {
-            printf("Room No: %d  ", availableRooms[i].room_no);
-            if (availableRooms[i].ac == 1)
+            printf("Room No: %d  ", rooms[i].room_no);
+            if (rooms[i].ac == 1)
             {
                 printf("AC: Yes  ");
             }
@@ -47,21 +47,54 @@ void displayAvailableRooms(struct room availableRooms[])
             {
                 printf("AC: No  ");
             }
-            printf("Rent: %d  \n", availableRooms[i].rent);
+            printf("Rent: %d  \n", rooms[i].rent);
         }
     }
 }
 
-void displayBookedRooms(struct room bookedRooms[])
+
+void bookRoom(struct room rooms[])
+{
+    int room_no;
+    printf("Enter room no: ");
+    scanf("%d", &room_no);
+    if (rooms[room_no - 1].booked == 0)
+    {
+        rooms[room_no - 1].booked = 1;
+
+        printf("Enter guest name: ");
+        scanf(" %s", rooms[room_no - 1].guest.name);
+        printf("Enter guest address: ");
+        scanf(" %s ", rooms[room_no - 1].guest.address);
+        printf("Enter guest phone: ");
+        scanf(" %s ", rooms[room_no - 1].guest.phone);
+        printf("Enter no of days: ");
+        scanf(" %d ", &rooms[room_no - 1].guest.days);
+        printf("Enter checkin date: ");
+        scanf("%d %d %d", &rooms[room_no - 1].guest.checkin.day, &rooms[room_no - 1].guest.checkin.month, &rooms[room_no - 1].guest.checkin.year);
+        rooms[room_no - 1].guest.total = rooms[room_no - 1].guest.days * rooms[room_no - 1].rent;
+        printf("Enter no of members: ");
+        scanf("%d", &rooms[room_no - 1].guest.totalmembers);
+
+
+        printf("Room booked successfully\n");
+    }
+    else
+    {
+        printf("Room is already booked\n");
+    }
+}
+
+void displayBookedRooms(struct room rooms[])
 {
     int i;
     printf("Booked Rooms\n");
     for (i = 0; i < 10; i++)
     {
-        if (bookedRooms[i].booked == 1)
+        if (rooms[i].booked == 1)
         {
-            printf("Room No: %d  ", bookedRooms[i].room_no);
-            if (bookedRooms[i].ac == 1)
+            printf("Room No: %d  ", rooms[i].room_no);
+            if (rooms[i].ac == 1)
             {
                 printf("AC: Yes  ");
             }
@@ -69,43 +102,89 @@ void displayBookedRooms(struct room bookedRooms[])
             {
                 printf("AC: No  ");
             }
-            printf("Rent: %d  \n", bookedRooms[i].rent);
-            printf("Guest Name: %s  ", bookedRooms[i].guest.name);
-            printf("Phone: %s  ", bookedRooms[i].guest.phone);
-            printf("Address: %s  ", bookedRooms[i].guest.address);
-            printf("Checkin: %d/%d/%d  ", bookedRooms[i].guest.checkin.day, bookedRooms[i].guest.checkin.month, bookedRooms[i].guest.checkin.year);
-            printf("Checkout: %d/%d/%d  ", bookedRooms[i].guest.checkout.day, bookedRooms[i].guest.checkout.month, bookedRooms[i].guest.checkout.year);
-            printf("Total: %d  ", bookedRooms[i].guest.total);
-            printf("Total Members: %d  \n", bookedRooms[i].guest.totalmembers);
-
-            printf("\n");
+            printf("Rent: %d  ", rooms[i].rent);
+            printf("Guest Name: %s  ", rooms[i].guest.name);
+            printf("Guest Address: %s  ", rooms[i].guest.address);
+            printf("Guest Phone: %s  ", rooms[i].guest.phone);
+            printf("No of days: %d  ", rooms[i].guest.days);
+            printf("Checkin date: %d/%d/%d  ", rooms[i].guest.checkin.day, rooms[i].guest.checkin.month, rooms[i].guest.checkin.year);
+            printf("Total: %d  ", rooms[i].guest.total);
+            printf("No of members: %d  \n", rooms[i].guest.totalmembers);
         }
     }
 }
 
-void 
-
-void main()
+void displayAllRooms(struct room rooms[])
 {
-    struct room hotel[2];
-    struct room availableRooms[10];
-    struct room bookedRooms[10];
     int i;
+    printf("All Rooms\n");
     for (i = 0; i < 10; i++)
     {
-        availableRooms[i].room_no = i + 1;
-        if (i % 2 == 0)
+        printf("Room No: %d  ", rooms[i].room_no);
+        if (rooms[i].ac == 1)
         {
-            availableRooms[i].ac = 1;
-            availableRooms[i].rent = 700;
+            printf("AC: Yes  ");
         }
         else
         {
-            availableRooms[i].ac = 0;
-            availableRooms[i].rent = 1000;
+            printf("AC: No  ");
+        }
+        printf("Rent: %d  ", rooms[i].rent);
+        if (rooms[i].booked == 1)
+        {
+            printf("Guest Name: %s  ", rooms[i].guest.name);
+            printf("Guest Address: %s  ", rooms[i].guest.address);
+            printf("Guest Phone: %s  ", rooms[i].guest.phone);
+            printf("No of days: %d  ", rooms[i].guest.days);
+            printf("Checkin date: %d/%d/%d  ", rooms[i].guest.checkin.day, rooms[i].guest.checkin.month, rooms[i].guest.checkin.year);
+            printf("Total: %d  ", rooms[i].guest.total);
+            printf("No of members: %d  \n", rooms[i].guest.totalmembers);
+        }
+        else
+        {
+            printf("Room is not booked\n");
+        }
+    }
+}
+
+void checkOut(struct room rooms[])
+{
+    int room_no;
+    printf("Enter room no: ");
+    scanf("%d", &room_no);
+    if (rooms[room_no - 1].booked == 1)
+    {
+        rooms[room_no - 1].booked = 0;
+        printf("Room checked out successfully\n");
+    }
+    else
+    {
+        printf("Room is not booked\n");
+    }
+}
+
+void main()
+{
+ 
+    struct room rooms[10];
+    struct room roomBookingHistory[0];
+
+    int i;
+    for (i = 0; i < 10; i++)
+    {
+        rooms[i].room_no = i + 1;
+        if (i % 2 == 0)
+        {
+            rooms[i].ac = 1;
+            rooms[i].rent = 700;
+        }
+        else
+        {
+            rooms[i].ac = 0;
+            rooms[i].rent = 1000;
         }
 
-        availableRooms[i].booked = 0;
+        rooms[i].booked = 0;
     }
     printf("Welcome to Hotel Management System\n");
 restartapp:
@@ -124,19 +203,19 @@ restartapp:
     switch (choice)
     {
     case 1:
-        displayAvailableRooms(availableRooms);
+        displayavailablerooms(rooms);
         break;
     case 2:
-        displayBookedRooms(bookedRooms);
+        displayBookedRooms(rooms);
         break;
     case 3:
-        // displayAllRooms(availableRooms, bookedRooms);
+        displayAllRooms(rooms);
         break;
     case 4:
-        // bookRoom(availableRooms, bookedRooms);
+        bookRoom(rooms);
         break;
     case 5:
-        // checkOut(availableRooms, bookedRooms);
+        checkOut(rooms);
         break;
     case 6:
         exit(0);
