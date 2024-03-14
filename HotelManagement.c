@@ -30,8 +30,32 @@ struct room
     int booked;
 };
 
+void displayAvailableRooms(struct room availableRooms[])
+{
+    int i;
+    printf("Available Rooms\n");
+    for (i = 0; i < 10; i++)
+    {
+        if (availableRooms[i].booked == 0)
+        {
+            printf("Room No: %d  ", availableRooms[i].room_no);
+            if (availableRooms[i].ac == 1)
+            {
+                printf("AC: Yes  ");
+            }
+            else
+            {
+                printf("AC: No  ");
+            }
+            printf("Rent: %d  \n", availableRooms[i].rent);
+        }
+    }
+}
+
+
 void main()
 {
+    struct room hotel[2];
     struct room availableRooms[10];
     struct room bookedRooms[10];
     int i;
@@ -51,8 +75,11 @@ void main()
 
         availableRooms[i].booked = 0;
     }
-    int choice;
+restartapp:
+
+    int choice, room_no;
     printf("Welcome to Hotel Management System\n");
+    printf("Choose an option\n");
     printf("1. Display Available rooms\n");
     printf("2. Display Booked rooms\n");
     printf("3. Display All rooms\n");
@@ -62,5 +89,26 @@ void main()
     printf("Enter your choice: ");
     scanf("%d", &choice);
 
-   
+    switch (choice)
+    {
+    case 1:
+        displayAvailableRooms(availableRooms);
+        break;
+    case 2:
+        // displayBookedRooms(bookedRooms);
+        break;
+    case 3:
+        // displayAllRooms(availableRooms, bookedRooms);
+        break;
+    case 4:
+        // bookRoom(availableRooms, bookedRooms);
+        break;
+    case 5:
+        // checkOut(availableRooms, bookedRooms);
+        break;
+    case 6:
+        exit(0);
+        break;
+    }
+    goto restartapp;
 }
