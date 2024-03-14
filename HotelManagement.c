@@ -26,7 +26,7 @@ struct room
     int room_no;
     int ac;
     int rent;
-    struct guest g;
+    struct guest guest;
     int booked;
 };
 
@@ -52,6 +52,38 @@ void displayAvailableRooms(struct room availableRooms[])
     }
 }
 
+void displayBookedRooms(struct room bookedRooms[])
+{
+    int i;
+    printf("Booked Rooms\n");
+    for (i = 0; i < 10; i++)
+    {
+        if (bookedRooms[i].booked == 1)
+        {
+            printf("Room No: %d  ", bookedRooms[i].room_no);
+            if (bookedRooms[i].ac == 1)
+            {
+                printf("AC: Yes  ");
+            }
+            else
+            {
+                printf("AC: No  ");
+            }
+            printf("Rent: %d  \n", bookedRooms[i].rent);
+            printf("Guest Name: %s  ", bookedRooms[i].guest.name);
+            printf("Phone: %s  ", bookedRooms[i].guest.phone);
+            printf("Address: %s  ", bookedRooms[i].guest.address);
+            printf("Checkin: %d/%d/%d  ", bookedRooms[i].guest.checkin.day, bookedRooms[i].guest.checkin.month, bookedRooms[i].guest.checkin.year);
+            printf("Checkout: %d/%d/%d  ", bookedRooms[i].guest.checkout.day, bookedRooms[i].guest.checkout.month, bookedRooms[i].guest.checkout.year);
+            printf("Total: %d  ", bookedRooms[i].guest.total);
+            printf("Total Members: %d  \n", bookedRooms[i].guest.totalmembers);
+
+            printf("\n");
+        }
+    }
+}
+
+void 
 
 void main()
 {
@@ -75,10 +107,10 @@ void main()
 
         availableRooms[i].booked = 0;
     }
+    printf("Welcome to Hotel Management System\n");
 restartapp:
 
     int choice, room_no;
-    printf("Welcome to Hotel Management System\n");
     printf("Choose an option\n");
     printf("1. Display Available rooms\n");
     printf("2. Display Booked rooms\n");
@@ -95,7 +127,7 @@ restartapp:
         displayAvailableRooms(availableRooms);
         break;
     case 2:
-        // displayBookedRooms(bookedRooms);
+        displayBookedRooms(bookedRooms);
         break;
     case 3:
         // displayAllRooms(availableRooms, bookedRooms);
